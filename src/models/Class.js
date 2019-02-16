@@ -6,6 +6,8 @@ const Schema = new ODM.Schema({
     type: String,
     required: true
   },
+  startedAt: String,
+  total: String,
   students: [{
     type: ODM.Schema.Types.ObjectId,
     ref: "Student"

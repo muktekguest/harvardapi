@@ -2,10 +2,6 @@ const ODM = require("mongoose");
 
 const Schema = new ODM.Schema({
   _id: ODM.Schema.Types.ObjectId,
-  registerNumber: {
-    type: String,
-    required: true
-  },
   name: {
     type: String,
     required: true
@@ -15,6 +11,18 @@ const Schema = new ODM.Schema({
     required: true
   },
   email: {
+    type: String,
+    required: true
+  },
+  birthday: {
+    type: String,
+    required: true
+  },
+  phone: {
+    type: String,
+    required: true
+  },
+  contact: {
     type: String,
     required: true
   },

@@ -19,4 +19,7 @@ app.route("/classes/:classId/students")
 app.route("/students")
   .get(Student.index);
 
+app.route("/students/:studentId")
+  .get(Student.getById);
+
 module.exports = app;

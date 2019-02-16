@@ -27,17 +27,35 @@ const Controller = {
   },
 
   create: (request, response) => {
-    const { name, grade, email, registerNumber } = request.body;
+    const { name, grade, email, birthday, phone, contact } = request.body;
     const { classId } = request.params;
 
     const newStudent = new Student({
       _id: new ODM.Types.ObjectId(),
-      registerNumber,
       name,
       grade,
       email,
+      birthday,
+      phone,
+      contact,
       course: classId
     });
+
+    // const found = await Class.find({ _id: classId });
+    //
+    // if (found.length > 0) {
+    //   const created = await newStudent.save();
+    //
+    //   await found[0].students.push(created._id);
+    //   await found[0].save();
+    //
+    //   response
+    //     .status(200)
+    //     .json({
+    //       type: "POST /classes/:classId/students",
+    //       data: created
+    //     });
+    // }
 
     Class
       .find({ _id: classId })
@@ -79,6 +97,39 @@ const Controller = {
             error: e
           });
       });
+  },
+
+  getById: (request, response) => {
+    const { studentId } = request.params;
+
+    Student
+      .find({
+        _id: studentId
+      })
+      .exec()
+      .then(found => {
+        if (found.length > 0) {
+          response
+            .status(200)
+            .json({
+              data: found
+            });
+        } else {
+          response
+            .status(404)
+            .json({
+              status: 404,
+              message: "Student not found"
+            });
+        }
+      })
+      .catch(e => {
+        response
+          .status(500)
+          .json({
+            error: e.message
+          });
+      })
   }
 };
 

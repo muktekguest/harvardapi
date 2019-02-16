@@ -26,11 +26,13 @@ const Controller = {
   },
 
   create: (request, response) => {
-    const { name } = request.body;
+    const { name, startedAt, total } = request.body;
 
     const newClass = new Class({
       _id: new ODM.Types.ObjectId(),
-      name
+      name,
+      startedAt,
+      total
     });
 
     newClass
@@ -90,7 +92,10 @@ const Controller = {
     Class
       .find({ _id: classId })
       .select("students")
-      .populate("students")
+      .populate({
+        path: "students",
+        select: "name"
+      })
       .exec()
       .then(students => {
         response
